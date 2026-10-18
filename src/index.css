@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #9e3d00;
+  --color-primary-container: #c15316;
+  --color-primary-fixed: #ffdbcc;
+  --color-primary-fixed-dim: #ffb695;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #fffbff;
+  --color-on-primary-fixed: #351000;
+  --color-on-primary-fixed-variant: #7c2e00;
+
+  --color-secondary: #456553;
+  --color-secondary-container: #c4e8d1;
+  --color-secondary-fixed: #c7ebd4;
+  --color-secondary-fixed-dim: #abcfb8;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #496a57;
+  --color-on-secondary-fixed: #002113;
+  --color-on-secondary-fixed-variant: #2d4d3c;
+
+  --color-tertiary: #a83029;
+  --color-tertiary-container: #ca483e;
+  --color-tertiary-fixed: #ffdad5;
+  --color-tertiary-fixed-dim: #ffb4ab;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #fffbff;
+  --color-on-tertiary-fixed: #410002;
+  --color-on-tertiary-fixed-variant: #8a1a16;
+
+  --color-surface: #fcf9f5;
+  --color-surface-dim: #dcdad6;
+  --color-surface-bright: #fcf9f5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3ef;
+  --color-surface-container: #f0edea;
+  --color-surface-container-high: #ebe8e4;
+  --color-surface-container-highest: #e5e2de;
+  --color-surface-variant: #e5e2de;
+  --color-on-surface: #1c1c1a;
+  --color-on-surface-variant: #574239;
+
+  --color-inverse-surface: #31302e;
+  --color-inverse-on-surface: #f3f0ed;
+  --color-inverse-primary: #ffb695;
+
+  --color-outline: #8b7267;
+  --color-outline-variant: #dec0b4;
+  --color-surface-tint: #a23f00;
+
+  --color-background: #fcf9f5;
+  --color-on-background: #1c1c1a;
+
+  --font-display-hero: "Playfair Display", Georgia, serif;
+  --font-headline-lg: "Playfair Display", Georgia, serif;
+  --font-headline-md: "Playfair Display", Georgia, serif;
+  --font-headline-sm: "Playfair Display", Georgia, serif;
+  --font-title-editorial: "EB Garamond", serif;
+  --font-body-lg: "EB Garamond", serif;
+  --font-body-md: "EB Garamond", serif;
+  --font-body-sm: "EB Garamond", serif;
+  --font-label-mono-lg: "Space Mono", monospace;
+  --font-label-mono-md: "Space Mono", monospace;
+  --font-label-mono-sm: "Space Mono", monospace;
+
+  --spacing-gutter: 1.5rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.75rem;
+  --spacing-space-xl: 3rem;
+  --spacing-space-2xl: 4.5rem;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fcf9f5;
+    color: #1c1c1a;
+    font-family: "EB Garamond", serif;
+  }
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Typography Utility Classes matching exact spec */
+.font-display-hero {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 56px;
+  line-height: 64px;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .font-display-hero {
+    font-size: 38px;
+    line-height: 44px;
+    letter-spacing: -0.01em;
+  }
+}
+
+.font-headline-lg {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .font-headline-lg {
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: -0.01em;
+  }
+}
+
+.font-headline-md {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 500;
+}
+
+.font-headline-sm {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 500;
+}
+
+.font-title-editorial {
+  font-family: "EB Garamond", serif;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+.font-body-lg {
+  font-family: "EB Garamond", serif;
+  font-size: 19px;
+  line-height: 30px;
+  font-weight: 400;
+}
+
+.font-body-md {
+  font-family: "EB Garamond", serif;
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: 400;
+}
+
+.font-body-sm {
+  font-family: "EB Garamond", serif;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.font-label-mono-lg {
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.font-label-mono-md {
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
+.font-label-mono-sm {
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}

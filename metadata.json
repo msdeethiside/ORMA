@@ -1,0 +1,6 @@
+{
+  "name": "ORMA Editions",
+  "description": "Printed puzzle compendiums, cipher books, and tactile zines created for trains, delayed departures, café benches, and unhurried afternoons without screens.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
