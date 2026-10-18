@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { ScreenId, CartItem } from '../types';
+import { EditableText } from '../components/admin/EditableText';
+import { EditableImage } from '../components/admin/EditableImage';
+
 
 interface StationKioskScreenProps {
   onNavigate: (screen: ScreenId) => void;
@@ -25,7 +28,7 @@ const JOURNEY_DATA: Record<JourneyType, JourneyRecommendation> = {
     tag: 'CIPHER SLIP • ACCORDION FOLD',
     title: 'The Subway Commute Mini Enigma',
     desc: 'Designed for high-frequency stop-and-go travel. A palm-sized 6-panel accordion fold with bite-sized word ladders and Caesar shifts solvable between stations.',
-    binding: 'CONCERTINA FOLD',
+    binding: 'Saddle stitch',
     extent: '6 PANELS',
     price: 8.0,
     image:
@@ -119,21 +122,34 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
             {/* Archival Overline Ledger Tag */}
             <div className="inline-flex items-center gap-2 bg-[#e5e2de] px-3 py-1 shadow-sm border border-[#dec0b4]">
               <span className="w-2 h-2 rounded-full bg-[#9e3d00] shrink-0 animate-ping"></span>
-              <span className="font-label-mono-sm text-label-mono-sm uppercase text-[#1c1c1a] tracking-widest font-bold">
-                EDITIONS DISPATCH • KIOSK BERTH NO. 04
-              </span>
+              <EditableText
+                id="hero_dispatch_tag"
+                defaultText="EDITIONS DISPATCH • KIOSK BERTH NO. 04"
+                className="font-label-mono-sm text-label-mono-sm uppercase text-[#1c1c1a] tracking-widest font-bold"
+              />
             </div>
 
             <h1 className="font-display-hero text-[#1c1c1a] tracking-tight leading-[1.08] max-w-2xl">
-              <span className="block text-2xl sm:text-3xl md:text-4xl uppercase tracking-wider text-[#9e3d00] font-bold font-headline-sm mb-2">
-                ORMA EDITIONS
-              </span>
-              Objects for the <span className="italic font-normal">quiet in-between.</span>
+              <EditableText
+                id="hero_brand_h1"
+                defaultText="ORMA EDITIONS"
+                as="span"
+                className="block text-2xl sm:text-3xl md:text-4xl uppercase tracking-wider text-[#9e3d00] font-bold font-headline-sm mb-2"
+              />
+              <EditableText
+                id="hero_tagline"
+                defaultText="Objects for the quiet in-between."
+                as="span"
+                className="inline"
+              />
             </h1>
 
-            <p className="font-body-lg text-body-lg text-[#574239] max-w-xl leading-relaxed">
-              Printed puzzle compendiums, cipher books, and tactile zines created for trains, delayed departures, café benches, and unhurried afternoons without screens.
-            </p>
+            <EditableText
+              id="hero_lead_text"
+              as="p"
+              defaultText="Printed puzzle compendiums, cipher books, and tactile zines created for trains, delayed departures, café benches, and unhurried afternoons without screens."
+              className="font-body-lg text-body-lg text-[#574239] max-w-xl leading-relaxed"
+            />
 
             {/* CTAs & Ticket Perforations */}
             <div className="pt-4 flex flex-wrap items-center gap-4 w-full sm:w-auto">
@@ -142,7 +158,11 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
                 onClick={() => onNavigate('editions-and-archive')}
                 className="group relative inline-flex items-center justify-between gap-4 bg-[#9e3d00] text-[#ffffff] font-label-mono-lg text-label-mono-lg px-6 py-3.5 shadow-[4px_4px_0px_0px_#1c1c1a] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#1c1c1a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer font-bold"
               >
-                <span className="tracking-wider">INSPECT EDITIONS [VOL. 01–06]</span>
+                <EditableText
+                  id="hero_cta_inspect"
+                  defaultText="INSPECT EDITIONS [VOL. 01–06]"
+                  className="tracking-wider"
+                />
                 <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">
                   arrow_forward
                 </span>
@@ -155,7 +175,10 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
                 className="font-label-mono-md text-label-mono-md uppercase tracking-wider text-[#1c1c1a] underline underline-offset-8 decoration-[#9e3d00] decoration-2 hover:text-[#9e3d00] transition-colors py-2 cursor-pointer font-bold"
                 href="#makers-note"
               >
-                Read Ms. Dee’s Maker’s Note ↓
+                <EditableText
+                  id="hero_cta_makers_note"
+                  defaultText="Read Ms. Dee’s Maker’s Note ↓"
+                />
               </a>
             </div>
 
@@ -163,15 +186,24 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
             <div className="pt-6 grid grid-cols-3 gap-4 w-full max-w-lg text-[#574239] font-label-mono-sm text-label-mono-sm uppercase bg-[#f0edea]/80 p-3 shadow-sm border border-[#dec0b4]">
               <div>
                 <div className="text-[#1c1c1a] font-bold">TYPEFACE</div>
-                <div>VERONA COLD TYPE</div>
+                <EditableText
+                  id="hero_spec_typeface_val"
+                  defaultText="VERONA COLD TYPE"
+                />
               </div>
               <div>
                 <div className="text-[#1c1c1a] font-bold">PAPER STOCK</div>
-                <div>120 GSM UNBLEACHED</div>
+                <EditableText
+                  id="hero_spec_paper_val"
+                  defaultText="120 GSM UNBLEACHED"
+                />
               </div>
               <div>
                 <div className="text-[#1c1c1a] font-bold">OFFLINE ONLY</div>
-                <div>NO QR CODES</div>
+                <EditableText
+                  id="hero_spec_offline_val"
+                  defaultText="NO QR CODES"
+                />
               </div>
             </div>
           </div>
@@ -182,33 +214,51 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
             <div className="relative bg-[#ffffff] p-4 shadow-[6px_6px_0px_0px_#1c1c1a] border-2 border-[#1c1c1a] transition-all">
               {/* Tactile Image */}
               <div className="relative w-full h-[360px] overflow-hidden bg-[#f0edea]">
-                <img
-                  className="w-full h-full object-cover"
-                  alt="Editorial still life photograph of an unbleached open railway crossword compendium lying on a polished walnut train compartment table beside an antique brass pencil, an espresso cup, and a vintage paper ticket stub."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpt4uPaofYvtj-hD4CI1vOIi_4imKlcW23jGOGONtFBnU6lsgtfc2P_fI2FuNkThlsbnAgltAf8U1u2cX9XGvjIDiHtVpBSu1eYSPOWaCTk2bsFpt4jOOCKWHX3E_VH6WuFVgJlYNjQFrT8VEZKgLjq2sgU4KKi6oJmmWe9Pdd7Unp4E5MHhx6W2O47k74QhkXiWwFhWwDAkgyxMBIOLP2OgjJZ6Cf23np34xMWhC_Scc3GXHJ7n6CJw"
+                <EditableImage
+                  id="hero_still_life_img"
+                  defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuCpt4uPaofYvtj-hD4CI1vOIi_4imKlcW23jGOGONtFBnU6lsgtfc2P_fI2FuNkThlsbnAgltAf8U1u2cX9XGvjIDiHtVpBSu1eYSPOWaCTk2bsFpt4jOOCKWHX3E_VH6WuFVgJlYNjQFrT8VEZKgLjq2sgU4KKi6oJmmWe9Pdd7Unp4E5MHhx6W2O47k74QhkXiWwFhWwDAkgyxMBIOLP2OgjJZ6Cf23np34xMWhC_Scc3GXHJ7n6CJw"
+                  alt="Editorial still life photograph of an unbleached open railway crossword compendium"
+                  className="w-full h-full"
+                  imgClassName="w-full h-full object-cover"
                 />
 
                 {/* Monospace Ticket Stamp floating over visual */}
-                <div className="absolute top-4 right-4 bg-[#ffffff]/95 backdrop-blur-sm p-3 shadow-[3px_3px_0px_0px_#1c1c1a] border border-[#1c1c1a] rotate-2">
+                <div className="absolute top-4 right-4 bg-[#ffffff]/95 backdrop-blur-sm p-3 shadow-[3px_3px_0px_0px_#1c1c1a] border border-[#1c1c1a] rotate-2 z-10 pointer-events-auto">
                   <div className="flex items-center gap-1.5 text-[#9e3d00] font-label-mono-sm text-label-mono-sm font-bold tracking-widest uppercase">
                     <span className="material-symbols-outlined text-[16px]">schedule</span>
-                    <span>JOURNEY TIME: 3H 45M</span>
+                    <EditableText
+                      id="hero_journey_badge"
+                      defaultText="JOURNEY TIME: 3H 45M"
+                    />
                   </div>
                   <div className="text-[10px] font-label-mono-sm text-[#574239] uppercase mt-0.5">
-                    MILANO CENTRALE → ZÜRICH HB
+                    <EditableText
+                      id="hero_route_line"
+                      defaultText="MILANO CENTRALE → ZÜRICH HB"
+                    />
                   </div>
                 </div>
 
                 {/* Inked Corner Station Master Stamp */}
-                <div className="absolute -bottom-2 -left-2 bg-[#456553] text-[#ffffff] px-3 py-1 font-label-mono-sm text-label-mono-sm uppercase tracking-widest -rotate-3 shadow-md border border-[#1c1c1a]">
-                  OFFICIAL VERONA PRESS
+                <div className="absolute -bottom-2 -left-2 bg-[#456553] text-[#ffffff] px-3 py-1 font-label-mono-sm text-label-mono-sm uppercase tracking-widest -rotate-3 shadow-md border border-[#1c1c1a] z-10 pointer-events-auto">
+                  <EditableText
+                    id="hero_stamp_text"
+                    defaultText="OFFICIAL VERONA PRESS"
+                  />
                 </div>
               </div>
 
               {/* Bottom Ledger Strip on the card */}
               <div className="mt-3 pt-2 border-t border-[#dec0b4] flex items-center justify-between font-label-mono-sm text-label-mono-sm text-[#574239] uppercase">
-                <span>PLATE 014 // DISPATCH LOG</span>
-                <span className="font-bold text-[#1c1c1a]">SERIES 2025</span>
+                <EditableText
+                  id="hero_plate_log"
+                  defaultText="PLATE 014 // DISPATCH LOG"
+                />
+                <EditableText
+                  id="hero_series_year"
+                  defaultText="SERIES 2025"
+                  className="font-bold text-[#1c1c1a]"
+                />
               </div>
             </div>
 
@@ -225,13 +275,18 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 gap-2 bg-[#ebe8e4] p-3 mb-6 shadow-sm border border-[#dec0b4]">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 bg-[#a83029]"></span>
-              <span className="font-label-mono-sm text-label-mono-sm uppercase font-bold tracking-widest text-[#1c1c1a]">
-                STATION ARCHIVE / FOUNDING DISPATCH • MEMO NO. 01
-              </span>
+              <EditableText
+                id="makers_note_memo_tag"
+                defaultText="STATION ARCHIVE / FOUNDING DISPATCH • MEMO NO. 01"
+                className="font-label-mono-sm text-label-mono-sm uppercase font-bold tracking-widest text-[#1c1c1a]"
+              />
             </div>
             <div className="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-[#574239] flex items-center gap-1.5">
               <span className="material-symbols-outlined text-[14px]">local_post_office</span>
-              <span>POSTAL REGISTRY: MILANO • WRITTEN IN TRANSIT</span>
+              <EditableText
+                id="makers_note_registry"
+                defaultText="POSTAL REGISTRY: MILANO • WRITTEN IN TRANSIT"
+              />
             </div>
           </div>
 
@@ -239,17 +294,25 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Verbatim Quote Block */}
             <div className="lg:col-span-8 flex flex-col space-y-4">
-              <blockquote className="font-headline-md text-headline-md text-[#1c1c1a] leading-snug tracking-tight font-semibold">
-                “ORMA was born in the particular stillness of a long journey.”
-              </blockquote>
+              <EditableText
+                id="makers_note_quote"
+                as="blockquote"
+                defaultText="“ORMA was born in the particular stillness of a long journey.”"
+                className="font-headline-md text-headline-md text-[#1c1c1a] leading-snug tracking-tight font-semibold"
+              />
 
               <div className="space-y-4 font-body-lg text-body-lg text-[#574239] leading-relaxed">
-                <p>
-                  I grew up travelling. Trains mostly, sometimes buses — long hours with my family, watching the landscape change outside the window. My mother always had something to read. So did we. Somewhere along the way, the bookstalls at stations started disappearing. The vendors who boarded trains with stacks of books stopped coming. And everyone started looking at their phones instead.
-                </p>
-                <p className="font-body-md text-body-md text-[#1c1c1a]">
-                  ORMA Editions are my answer to that disappearance. For the train, the café, the wait, the quiet in-between moments that don’t need a screen.
-                </p>
+                <EditableText
+                  id="makers_note_p1"
+                  as="p"
+                  defaultText="I grew up travelling. Trains mostly, sometimes buses — long hours with my family, watching the landscape change outside the window. My mother always had something to read. So did we. Somewhere along the way, the bookstalls at stations started disappearing. The vendors who boarded trains with stacks of books stopped coming. And everyone started looking at their phones instead."
+                />
+                <EditableText
+                  id="makers_note_p2"
+                  as="p"
+                  defaultText="ORMA Editions are my answer to that disappearance. For the train, the café, the wait, the quiet in-between moments that don’t need a screen."
+                  className="font-body-md text-body-md text-[#1c1c1a]"
+                />
               </div>
 
               {/* Editorial Signature Line */}
@@ -259,12 +322,16 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
                     Dee
                   </div>
                   <div>
-                    <div className="font-label-mono-md text-label-mono-md font-bold uppercase tracking-wider text-[#1c1c1a]">
-                      Ms. Dee
-                    </div>
-                    <div className="font-label-mono-sm text-label-mono-sm uppercase text-[#574239]">
-                      Founder & Editor, ORMA Compendiums
-                    </div>
+                    <EditableText
+                      id="makers_note_author_name"
+                      defaultText="Ms. Dee"
+                      className="font-label-mono-md text-label-mono-md font-bold uppercase tracking-wider text-[#1c1c1a] block"
+                    />
+                    <EditableText
+                      id="makers_note_author_role"
+                      defaultText="Founder & Editor, ORMA Compendiums"
+                      className="font-label-mono-sm text-label-mono-sm uppercase text-[#574239] block"
+                    />
                   </div>
                 </div>
 
@@ -323,7 +390,10 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
                   </div>
                 </div>
                 <div className="text-center font-label-mono-sm text-label-mono-sm uppercase text-[#574239] pt-2">
-                  FIG. 01 — THE PASSING WIRESCAPE
+                  <EditableText
+                    id="makers_note_window_caption"
+                    defaultText="FIG. 01 — THE PASSING WIRESCAPE"
+                  />
                 </div>
               </div>
             </div>
@@ -337,14 +407,23 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           {/* Section Title & Subheader */}
           <div className="max-w-2xl mb-8">
             <div className="inline-flex items-center gap-1 bg-[#ffffff] text-[#9e3d00] font-label-mono-sm text-label-mono-sm uppercase px-2 py-0.5 tracking-wider mb-2 border border-[#dec0b4]">
-              <span>INTERACTIVE ROUTE COMPASS</span>
+              <EditableText
+                id="compass_badge"
+                defaultText="INTERACTIVE ROUTE COMPASS"
+              />
             </div>
-            <h2 className="font-headline-lg text-headline-lg text-[#1c1c1a] tracking-tight">
-              How long is your journey today?
-            </h2>
-            <p className="font-body-md text-body-md text-[#574239] mt-1">
-              Select your transit window to reveal the compendium format engineered precisely for that duration.
-            </p>
+            <EditableText
+              id="compass_title"
+              as="h2"
+              defaultText="How long is your journey today?"
+              className="font-headline-lg text-headline-lg text-[#1c1c1a] tracking-tight block"
+            />
+            <EditableText
+              id="compass_subtitle"
+              as="p"
+              defaultText="Select your transit window to reveal the compendium format engineered precisely for that duration."
+              className="font-body-md text-body-md text-[#574239] mt-1 block"
+            />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -517,16 +596,25 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
         {/* Header with Live Stock Monospace Feed */}
         <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 mb-8 gap-4 border-b border-[#dec0b4]">
           <div>
-            <span className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-[#9e3d00] font-bold">
-              CURRENT STATION PRESSWORK
-            </span>
-            <h2 className="font-headline-lg text-headline-lg text-[#1c1c1a] tracking-tight mt-1 font-bold">
-              The Current Print Run
-            </h2>
+            <EditableText
+              id="print_run_tag"
+              defaultText="CURRENT STATION PRESSWORK"
+              className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-[#9e3d00] font-bold block"
+            />
+            <EditableText
+              id="print_run_title"
+              as="h2"
+              defaultText="The Current Print Run"
+              className="font-headline-lg text-headline-lg text-[#1c1c1a] tracking-tight mt-1 font-bold block"
+            />
           </div>
           <div className="flex items-center gap-2 font-label-mono-sm text-label-mono-sm uppercase bg-[#f0edea] px-3 py-1.5 shadow-sm border border-[#dec0b4]">
             <span className="w-2 h-2 rounded-full bg-[#456553]"></span>
-            <span className="text-[#1c1c1a] font-bold">VERONA WORKSHOP DISPATCH: ACTIVE</span>
+            <EditableText
+              id="print_run_dispatch_status"
+              defaultText="VERONA WORKSHOP DISPATCH: ACTIVE"
+              className="text-[#1c1c1a] font-bold"
+            />
           </div>
         </div>
 
@@ -536,25 +624,33 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           <article className="bg-[#ffffff] p-4 shadow-[4px_4px_0px_0px_#1c1c1a] border-2 border-[#1c1c1a] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#1c1c1a] transition-all flex flex-col justify-between">
             <div>
               <div className="relative h-56 w-full bg-[#f0edea] overflow-hidden mb-4 border border-[#dec0b4]">
-                <img
-                  className="w-full h-full object-cover"
+                <EditableImage
+                  id="run1_img"
+                  defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuDKMqcsdCOxSMKe5XEyVsisWhPF3roQC0NM1Q7JB0DE6qjrz9gzccbXXGtwMV9uJ3W9F0EIcnV1KVNMpGld1XMwHYAvw7pBAUrk3pS-jaqGaxn9BkLUli0u62IHwLBOlaG0lFSEqbsfEHs2oak6UDrtDUu_AHLqJVfIlKQ0F5Yn98FrwHXB_xTBiVqTM32PF-3xYeloS7wIlO3qAUHLZSGqOezE1QCXOGJQO_FcLDBS0prS81kYm7-LEQ"
                   alt="Photograph of Volume I book cover titled The Trans-Continental Caesar Cipher"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKMqcsdCOxSMKe5XEyVsisWhPF3roQC0NM1Q7JB0DE6qjrz9gzccbXXGtwMV9uJ3W9F0EIcnV1KVNMpGld1XMwHYAvw7pBAUrk3pS-jaqGaxn9BkLUli0u62IHwLBOlaG0lFSEqbsfEHs2oak6UDrtDUu_AHLqJVfIlKQ0F5Yn98FrwHXB_xTBiVqTM32PF-3xYeloS7wIlO3qAUHLZSGqOezE1QCXOGJQO_FcLDBS0prS81kYm7-LEQ"
+                  className="w-full h-full"
+                  imgClassName="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 left-2 bg-white text-[#1c1c1a] font-label-mono-sm text-[10px] px-2 py-0.5 shadow-sm font-bold border border-[#dec0b4]">
+                <div className="absolute top-2 left-2 bg-white text-[#1c1c1a] font-label-mono-sm text-[10px] px-2 py-0.5 shadow-sm font-bold border border-[#dec0b4] z-10 pointer-events-auto">
                   VOL. 01 • HARDCOVER
                 </div>
-                <div className="absolute bottom-2 right-2 bg-[#9e3d00] text-white font-label-mono-sm text-label-mono-sm px-2 py-0.5 font-bold shadow-sm">
+                <div className="absolute bottom-2 right-2 bg-[#9e3d00] text-white font-label-mono-sm text-label-mono-sm px-2 py-0.5 font-bold shadow-sm z-10 pointer-events-auto">
                   $24.00
                 </div>
               </div>
 
-              <h3 className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-1 leading-snug">
-                The Trans-Continental Caesar Cipher
-              </h3>
-              <p className="font-body-sm text-body-sm text-[#574239] mb-4">
-                180 pages of cascading polyalphabetic riddles matched with historical passenger train manifests from Paris to Istanbul.
-              </p>
+              <EditableText
+                id="run1_title"
+                as="h3"
+                defaultText="The Trans-Continental Caesar Cipher"
+                className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-1 leading-snug block"
+              />
+              <EditableText
+                id="run1_desc"
+                as="p"
+                defaultText="180 pages of cascading polyalphabetic riddles matched with historical passenger train manifests from Paris to Istanbul."
+                className="font-body-sm text-body-sm text-[#574239] mb-4 block"
+              />
               <div className="font-label-mono-sm text-label-mono-sm uppercase text-[#574239] space-y-1 pb-4">
                 <div className="flex justify-between">
                   <span>FORMAT:</span> <span className="text-[#1c1c1a] font-bold">GOLD FOIL / RAW CARD</span>
@@ -596,25 +692,33 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           <article className="bg-[#ffffff] p-4 shadow-[4px_4px_0px_0px_#1c1c1a] border-2 border-[#1c1c1a] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#1c1c1a] transition-all flex flex-col justify-between">
             <div>
               <div className="relative h-56 w-full bg-[#f0edea] overflow-hidden mb-4 border border-[#dec0b4]">
-                <img
-                  className="w-full h-full object-cover"
+                <EditableImage
+                  id="run2_img"
+                  defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuBISGYmFSPWxXKof71snFTCkAr86xncjWAY58PL0UQ9A2jQFNnZV1jANKSSHxYhN7QAyFNk4szzqnbrd0PcXSxTOCRZ-Uz8I5-HJIXoV6Wt4S4WDcg3Z_xmrBFaFxUGlxopzN6DQ2RpFHz_lW4S4UpJeUF3dpVqC1WmVsoHfmtTXm08uGvI914oxQvbsFiWDGI7yDZ5eHhAI4dGyl5HhNRMQI8z2cHD98a0gNpHcpe0xr9uaLU_Blt4qw"
                   alt="Photograph of Volume II Station Architecture Word Search book open flat"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBISGYmFSPWxXKof71snFTCkAr86xncjWAY58PL0UQ9A2jQFNnZV1jANKSSHxYhN7QAyFNk4szzqnbrd0PcXSxTOCRZ-Uz8I5-HJIXoV6Wt4S4WDcg3Z_xmrBFaFxUGlxopzN6DQ2RpFHz_lW4S4UpJeUF3dpVqC1WmVsoHfmtTXm08uGvI914oxQvbsFiWDGI7yDZ5eHhAI4dGyl5HhNRMQI8z2cHD98a0gNpHcpe0xr9uaLU_Blt4qw"
+                  className="w-full h-full"
+                  imgClassName="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 left-2 bg-white text-[#1c1c1a] font-label-mono-sm text-[10px] px-2 py-0.5 shadow-sm font-bold border border-[#dec0b4]">
+                <div className="absolute top-2 left-2 bg-white text-[#1c1c1a] font-label-mono-sm text-[10px] px-2 py-0.5 shadow-sm font-bold border border-[#dec0b4] z-10 pointer-events-auto">
                   VOL. 02 • LAY-FLAT
                 </div>
-                <div className="absolute bottom-2 right-2 bg-[#456553] text-white font-label-mono-sm text-label-mono-sm px-2 py-0.5 font-bold shadow-sm">
+                <div className="absolute bottom-2 right-2 bg-[#456553] text-white font-label-mono-sm text-label-mono-sm px-2 py-0.5 font-bold shadow-sm z-10 pointer-events-auto">
                   $22.00
                 </div>
               </div>
 
-              <h3 className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-1 leading-snug">
-                Station Architecture Word Search & Field Notes
-              </h3>
-              <p className="font-body-sm text-body-sm text-[#574239] mb-4">
-                Word matrices nested directly into authentic terminal blueprints and platform schematics from Leipzig, Milano, and St. Pancras.
-              </p>
+              <EditableText
+                id="run2_title"
+                as="h3"
+                defaultText="Station Architecture Word Search & Field Notes"
+                className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-1 leading-snug block"
+              />
+              <EditableText
+                id="run2_desc"
+                as="p"
+                defaultText="Word matrices nested directly into authentic terminal blueprints and platform schematics from Leipzig, Milano, and St. Pancras."
+                className="font-body-sm text-body-sm text-[#574239] mb-4 block"
+              />
               <div className="font-label-mono-sm text-label-mono-sm uppercase text-[#574239] space-y-1 pb-4">
                 <div className="flex justify-between">
                   <span>FORMAT:</span> <span className="text-[#1c1c1a] font-bold">RISO GREEN INK / SPIRAL</span>
@@ -656,25 +760,33 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           <article className="bg-[#ffffff] p-4 shadow-[4px_4px_0px_0px_#1c1c1a] border-2 border-[#1c1c1a] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#1c1c1a] transition-all flex flex-col justify-between">
             <div>
               <div className="relative h-56 w-full bg-[#f0edea] overflow-hidden mb-4 border border-[#dec0b4]">
-                <img
-                  className="w-full h-full object-cover"
+                <EditableImage
+                  id="run3_img"
+                  defaultSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuCSH1PwlwwAuIYVtH38XMlT-gHD9LjFgQOjLt9QJWjID5zhL5JErq8Q6TtltJnuum8uR6ornv0s9VghgQRi0s4_YKIUbrfolJKd65TMQ8bRWbSJixtkQopuLsCOdC-7vw9FoXV-NuqVEAvliDri0YFV2J43IglnGcO3Tm_3meXwmKUU2lgtLD2Nhs05M0AxeyQGFxjFlU4d3sOCdrN3YUj07rsdebEVBS4zy0S9em5TbID0wYoKa02TdA"
                   alt="Editorial overhead macro view of Zine 04 Telegram Enigmas"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSH1PwlwwAuIYVtH38XMlT-gHD9LjFgQOjLt9QJWjID5zhL5JErq8Q6TtltJnuum8uR6ornv0s9VghgQRi0s4_YKIUbrfolJKd65TMQ8bRWbSJixtkQopuLsCOdC-7vw9FoXV-NuqVEAvliDri0YFV2J43IglnGcO3Tm_3meXwmKUU2lgtLD2Nhs05M0AxeyQGFxjFlU4d3sOCdrN3YUj07rsdebEVBS4zy0S9em5TbID0wYoKa02TdA"
+                  className="w-full h-full"
+                  imgClassName="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 left-2 bg-white text-[#1c1c1a] font-label-mono-sm text-[10px] px-2 py-0.5 shadow-sm font-bold border border-[#dec0b4]">
+                <div className="absolute top-2 left-2 bg-white text-[#1c1c1a] font-label-mono-sm text-[10px] px-2 py-0.5 shadow-sm font-bold border border-[#dec0b4] z-10 pointer-events-auto">
                   ZINE 04 • SINGER SEWN
                 </div>
-                <div className="absolute bottom-2 right-2 bg-[#1c1c1a] text-white font-label-mono-sm text-label-mono-sm px-2 py-0.5 font-bold shadow-sm">
+                <div className="absolute bottom-2 right-2 bg-[#1c1c1a] text-white font-label-mono-sm text-label-mono-sm px-2 py-0.5 font-bold shadow-sm z-10 pointer-events-auto">
                   $14.00
                 </div>
               </div>
 
-              <h3 className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-1 leading-snug">
-                Telegram Enigmas & Lost Station Maps
-              </h3>
-              <p className="font-body-sm text-body-sm text-[#574239] mb-4">
-                A pocket-sized sequence of short telegram cyphers, forgotten semaphore flags, and cartographic logic puzzles for brief train hops.
-              </p>
+              <EditableText
+                id="run3_title"
+                as="h3"
+                defaultText="Telegram Enigmas & Lost Station Maps"
+                className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-1 leading-snug block"
+              />
+              <EditableText
+                id="run3_desc"
+                as="p"
+                defaultText="A pocket-sized sequence of short telegram cyphers, forgotten semaphore flags, and cartographic logic puzzles for brief train hops."
+                className="font-body-sm text-body-sm text-[#574239] mb-4 block"
+              />
               <div className="font-label-mono-sm text-label-mono-sm uppercase text-[#574239] space-y-1 pb-4">
                 <div className="flex justify-between">
                   <span>FORMAT:</span> <span className="text-[#1c1c1a] font-bold">SINGER SEWN RED THREAD</span>
@@ -720,15 +832,23 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
           {/* Section Header */}
           <div className="mb-8 flex flex-col md:flex-row md:items-baseline justify-between gap-2 border-b border-[#dec0b4]/60 pb-4">
             <div>
-              <span className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-[#574239] font-bold">
-                THE PHYSICAL MANIFESTO
-              </span>
-              <h3 className="font-headline-md text-headline-md text-[#1c1c1a] tracking-tight font-semibold mt-1">
-                Crafted for the human hand, not the glass screen.
-              </h3>
+              <EditableText
+                id="manifesto_tag"
+                defaultText="THE PHYSICAL MANIFESTO"
+                className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-[#574239] font-bold block"
+              />
+              <EditableText
+                id="manifesto_title"
+                as="h3"
+                defaultText="Crafted for the human hand, not the glass screen."
+                className="font-headline-md text-headline-md text-[#1c1c1a] tracking-tight font-semibold mt-1 block"
+              />
             </div>
             <div className="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-[#574239]">
-              SPECIFICATION CODE: DIN 476 • FSC CERTIFIED
+              <EditableText
+                id="manifesto_spec_code"
+                defaultText="SPECIFICATION CODE: DIN 476 • FSC CERTIFIED"
+              />
             </div>
           </div>
 
@@ -742,12 +862,18 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
               <span className="font-label-mono-sm text-label-mono-sm uppercase text-[#9e3d00] font-bold tracking-widest block mb-1">
                 PILLAR 01
               </span>
-              <h4 className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-2">
-                Lay-Flat Cold Binding
-              </h4>
-              <p className="font-body-md text-body-md text-[#574239] leading-relaxed">
-                Pencils won’t snap the spine. Every compendium is bound using flexible cold-glue Swiss techniques that allow the book to rest 180° open across your knee or café table without closing on itself.
-              </p>
+              <EditableText
+                id="manifesto_p1_title"
+                as="h4"
+                defaultText="Lay-Flat Cold Binding"
+                className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-2 block"
+              />
+              <EditableText
+                id="manifesto_p1_desc"
+                as="p"
+                defaultText="Pencils won’t snap the spine. Every compendium is bound using flexible cold-glue Swiss techniques that allow the book to rest 180° open across your knee or café table without closing on itself."
+                className="font-body-md text-body-md text-[#574239] leading-relaxed block"
+              />
             </div>
 
             {/* Pillar 2: 100% Recycled Cotton-Rag & Wheat Paper */}
@@ -758,12 +884,18 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
               <span className="font-label-mono-sm text-label-mono-sm uppercase text-[#456553] font-bold tracking-widest block mb-1">
                 PILLAR 02
               </span>
-              <h4 className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-2">
-                Cotton-Rag & Wheat Paper
-              </h4>
-              <p className="font-body-md text-body-md text-[#574239] leading-relaxed">
-                Zero bleed-through from fountain pens. Custom 120–140 GSM unbleached rag crafted in Verona mills, providing tactile tooth for graphite and pure resistance to bleeding ink.
-              </p>
+              <EditableText
+                id="manifesto_p2_title"
+                as="h4"
+                defaultText="Cotton-Rag & Wheat Paper"
+                className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-2 block"
+              />
+              <EditableText
+                id="manifesto_p2_desc"
+                as="p"
+                defaultText="Zero bleed-through from fountain pens. Custom 120–140 GSM unbleached rag crafted in Verona mills, providing tactile tooth for graphite and pure resistance to bleeding ink."
+                className="font-body-md text-body-md text-[#574239] leading-relaxed block"
+              />
             </div>
 
             {/* Pillar 3: Zero QR Codes or Screen Links */}
@@ -774,12 +906,18 @@ export const StationKioskScreen: React.FC<StationKioskScreenProps> = ({
               <span className="font-label-mono-sm text-label-mono-sm uppercase text-[#a83029] font-bold tracking-widest block mb-1">
                 PILLAR 03
               </span>
-              <h4 className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-2">
-                Zero QR Codes or Links
-              </h4>
-              <p className="font-body-md text-body-md text-[#574239] leading-relaxed">
-                Completely offline solace. Solutions are housed in sealed rear envelopes printed upside down with mechanical cipher discs included inside the front jacket. No connectivity required.
-              </p>
+              <EditableText
+                id="manifesto_p3_title"
+                as="h4"
+                defaultText="Zero QR Codes or Links"
+                className="font-headline-sm text-headline-sm text-[#1c1c1a] font-semibold mb-2 block"
+              />
+              <EditableText
+                id="manifesto_p3_desc"
+                as="p"
+                defaultText="Completely offline solace. Solutions are housed in sealed rear envelopes printed upside down with mechanical cipher discs included inside the front jacket. No connectivity required."
+                className="font-body-md text-body-md text-[#574239] leading-relaxed block"
+              />
             </div>
           </div>
 

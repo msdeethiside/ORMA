@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { CATALOG_EDITIONS, STOCKIST_LOCATIONS } from '../data/editions';
 import { CatalogEdition, CartItem, StockistLocation } from '../types';
+import { EditableText } from '../components/admin/EditableText';
+
 
 interface EditionsArchiveScreenProps {
   onOpenPreview: (edition: CatalogEdition) => void;
@@ -111,12 +113,18 @@ Verona Studio Desk, Italy.
               <span>•</span>
               <span>VERONA IMPRINT NO. 884-C</span>
             </div>
-            <h1 className="font-headline-lg text-[#1c1c1a] font-semibold tracking-tight leading-none mb-2">
-              The Complete Catalogue & Print Archive
-            </h1>
-            <p className="font-label-mono-md text-label-mono-md uppercase tracking-widest text-[#574239]">
-              EDITIONS VOL. 01 TO 06 • PERSONAL ZINE COLLECTION • RISOGRAPH IMPRINTS
-            </p>
+            <EditableText
+              id="archive_title"
+              as="h1"
+              defaultText="The Complete Catalogue & Print Archive"
+              className="font-headline-lg text-[#1c1c1a] font-semibold tracking-tight leading-none mb-2 block"
+            />
+            <EditableText
+              id="archive_subtitle"
+              as="p"
+              defaultText="EDITIONS VOL. 01 TO 06 • PERSONAL ZINE COLLECTION • RISOGRAPH IMPRINTS"
+              className="font-label-mono-md text-label-mono-md uppercase tracking-widest text-[#574239] block"
+            />
           </div>
 
           <div className="flex items-center gap-2 bg-[#f6f3ef] px-4 py-2 border border-[#dec0b4] shadow-sm self-stretch md:self-auto">
@@ -125,9 +133,11 @@ Verona Studio Desk, Italy.
               <span className="font-label-mono-sm text-label-mono-sm text-[#1c1c1a] uppercase font-bold tracking-wider">
                 LIVE STOCK STATUS
               </span>
-              <span className="font-label-mono-sm text-label-mono-sm text-[#574239]">
-                BATCH #04 • 92 / 300 SLOTS REMAINING
-              </span>
+              <EditableText
+                id="archive_stock_status"
+                defaultText="BATCH #04 • 92 / 300 SLOTS REMAINING"
+                className="font-label-mono-sm text-label-mono-sm text-[#574239]"
+              />
             </div>
           </div>
         </div>
@@ -136,9 +146,11 @@ Verona Studio Desk, Italy.
         <div className="bg-[#ebe8e4] p-3 shadow-sm border border-[#dec0b4] flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
             <span className="material-symbols-outlined text-[#9e3d00] text-[18px]">verified</span>
-            <span className="font-label-mono-sm text-label-mono-sm text-[#1c1c1a] uppercase tracking-wider truncate">
-              Current Print Run Batch #04 • Hand-numbered editions packaged in glassine envelopes with station luggage tags.
-            </span>
+            <EditableText
+              id="archive_banner_notice"
+              defaultText="Current Print Run Batch #04 • Hand-numbered editions packaged in glassine envelopes with station luggage tags."
+              className="font-label-mono-sm text-label-mono-sm text-[#1c1c1a] uppercase tracking-wider truncate"
+            />
           </div>
           <a
             className="font-label-mono-sm text-label-mono-sm uppercase font-bold text-[#9e3d00] hover:text-[#c15316] shrink-0 flex items-center gap-1 transition-colors cursor-pointer"

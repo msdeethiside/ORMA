@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ScreenId } from '../types';
+import { EditableText } from './admin/EditableText';
+import { useAdmin } from '../context/AdminContext';
 
 interface FooterProps {
   onNavigate: (screen: ScreenId) => void;
@@ -7,6 +9,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const { openAuthModal, isAdmin } = useAdmin();
   const [email, setEmail] = useState('');
   const [enrolled, setEnrolled] = useState(false);
 
@@ -34,14 +37,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 EST. 2024
               </span>
             </div>
-            <p className="font-body-lg text-body-lg text-[#574239] max-w-md mb-4 italic leading-relaxed">
-              Born in the stillness of long train journeys. Physical puzzle compendiums and printed zines made for transit, cafés, and unhurried hours.
-            </p>
+            <EditableText
+              id="footer_editorial_quote"
+              as="p"
+              defaultText="Born in the stillness of long train journeys. Physical puzzle compendiums and printed zines made for transit, cafés, and unhurried hours."
+              className="font-body-lg text-body-lg text-[#574239] max-w-md mb-4 italic leading-relaxed block"
+            />
             <div className="font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-[#574239] flex items-center gap-2">
               <span className="material-symbols-outlined text-[16px] text-[#456553]">verified</span>
               <span>AUTHENTIC LETTERPRESS • VERONA PRESSWORK</span>
             </div>
           </div>
+
 
           {/* Compendiums */}
           <div>
@@ -160,12 +167,31 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Bottom Ledger Colophon */}
         <div className="pt-6 border-t border-[#dec0b4]/40 flex flex-col md:flex-row items-center justify-between gap-2 text-[#574239] font-label-mono-sm text-label-mono-sm uppercase tracking-wider text-center md:text-left">
-          <p>ORMA EDITIONS © 2025 • EDITED BY MS. DEE • OFFLINE BY INTENTION</p>
-          <div className="flex items-center gap-4">
+          <EditableText
+            id="footer_colophon"
+            defaultText="ORMA EDITIONS © 2025 • EDITED BY MS. DEE • OFFLINE BY INTENTION"
+          />
+          <div className="flex items-center gap-4 flex-wrap justify-center">
             <span>VERONA • ZÜRICH • KYOTO</span>
             <span>PRINTED IN RAW COTTON-RAG</span>
+            <button
+              type="button"
+              onClick={openAuthModal}
+              className={`inline-flex items-center gap-1 px-2 py-0.5 border text-[10px] font-mono tracking-wider transition-all cursor-pointer ${
+                isAdmin
+                  ? 'bg-sky-100 text-sky-800 border-sky-400 font-bold'
+                  : 'bg-[#ebe8e4] text-[#574239] hover:text-[#9e3d00] border-[#dec0b4]'
+              }`}
+              title="Visual Admin & Inline Edit Mode (Route: /admin-1994, PIN: 1994)"
+            >
+              <span className="material-symbols-outlined text-[12px]">
+                {isAdmin ? 'lock_open' : 'lock'}
+              </span>
+              <span>{isAdmin ? 'Admin: Active' : 'Admin: 1994'}</span>
+            </button>
           </div>
         </div>
+
       </div>
     </footer>
   );

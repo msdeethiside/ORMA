@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { EditableText } from '../components/admin/EditableText';
 
 export const DispatchSubmissionsScreen: React.FC = () => {
+
   const [creatorName, setCreatorName] = useState('');
   const [creatorEmail, setCreatorEmail] = useState('');
   const [manuscriptTitle, setManuscriptTitle] = useState('');
@@ -106,12 +108,18 @@ export const DispatchSubmissionsScreen: React.FC = () => {
           {/* Main Headline and Editorial Lead */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-8">
-              <h1 className="font-headline-lg text-headline-lg text-[#1c1c1a] tracking-tight leading-none mb-4 font-bold">
-                Open Carriage Submissions & Creator Dispatch
-              </h1>
-              <p className="font-body-lg text-body-lg text-[#574239] max-w-2xl leading-relaxed">
-                We are actively acquiring and co-publishing independent zines, bespoke word searches, narrative crosswords, mathematical enigmas, and travel chronicles made for offline contemplation. If you have spent quiet transit hours composing paper artifacts, lay them on our desk.
-              </p>
+              <EditableText
+                id="submissions_title"
+                as="h1"
+                defaultText="Open Carriage Submissions & Creator Dispatch"
+                className="font-headline-lg text-headline-lg text-[#1c1c1a] tracking-tight leading-none mb-4 font-bold block"
+              />
+              <EditableText
+                id="submissions_lead"
+                as="p"
+                defaultText="We are actively acquiring and co-publishing independent zines, bespoke word searches, narrative crosswords, mathematical enigmas, and travel chronicles made for offline contemplation. If you have spent quiet transit hours composing paper artifacts, lay them on our desk."
+                className="font-body-lg text-body-lg text-[#574239] max-w-2xl leading-relaxed block"
+              />
             </div>
 
             {/* Archival Status Card */}

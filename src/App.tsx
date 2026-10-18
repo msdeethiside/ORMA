@@ -11,9 +11,15 @@ import { StationKioskScreen } from './screens/StationKioskScreen';
 import { EditionsArchiveScreen } from './screens/EditionsArchiveScreen';
 import { FeaturedSolveScreen } from './screens/FeaturedSolveScreen';
 import { DispatchSubmissionsScreen } from './screens/DispatchSubmissionsScreen';
+import { AdminProvider, useAdmin } from './context/AdminContext';
+import { AdminBottomBar } from './components/admin/AdminBottomBar';
+import { AdminAuthModal } from './components/admin/AdminAuthModal';
+import { ImageSwapModal } from './components/admin/ImageSwapModal';
 
-export default function App() {
+function AppLayout() {
+  const { isAdmin } = useAdmin();
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('station-kiosk');
+
 
   // Initial cart with 2 items to match the starting header badge "Carriage Bag: 2"
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -140,7 +146,11 @@ export default function App() {
   }, [currentScreen]);
 
   return (
-    <div className="bg-[#fcf9f5] text-[#1c1c1a] font-body-md text-body-md min-h-screen flex flex-col selection:bg-[#ffdbcc] selection:text-[#351000]">
+    <div
+      className={`bg-[#fcf9f5] text-[#1c1c1a] font-body-md text-body-md min-h-screen flex flex-col selection:bg-[#ffdbcc] selection:text-[#351000] ${
+        isAdmin ? 'admin-mode-active pb-24' : ''
+      }`}
+    >
       {/* Top Header */}
       <Header
         currentScreen={currentScreen}
@@ -243,6 +253,20 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
+
+      {/* Admin Visual Inline Edit Controls */}
+      <AdminBottomBar />
+      <AdminAuthModal />
+      <ImageSwapModal />
     </div>
   );
 }
+
+export default function App() {
+  return (
+    <AdminProvider>
+      <AppLayout />
+    </AdminProvider>
+  );
+}
+

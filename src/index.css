@@ -194,3 +194,30 @@
   letter-spacing: 0.08em;
   font-weight: 400;
 }
+
+/* Visual Admin & Inline Editing Modes */
+.admin-mode-active [contenteditable="true"] {
+  outline: none;
+  transition: outline 0.15s ease, background-color 0.15s ease;
+}
+
+.admin-mode-active [contenteditable="true"]:hover,
+.admin-mode-active .admin-editable-text:hover {
+  outline: 2px dashed #38bdf8 !important; /* light blue dashed border */
+  outline-offset: 3px;
+  background-color: rgba(56, 189, 248, 0.08) !important;
+  cursor: text;
+}
+
+.admin-mode-active [contenteditable="true"]:focus,
+.admin-mode-active .admin-editable-text:focus {
+  outline: 2px solid #0284c7 !important;
+  outline-offset: 3px;
+  background-color: rgba(56, 189, 248, 0.12) !important;
+}
+
+.admin-mode-active .admin-editable-img:hover {
+  outline: 2px dashed #38bdf8 !important;
+  outline-offset: 3px;
+}
+

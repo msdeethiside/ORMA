@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { ScreenId, CartItem } from '../types';
+import { EditableText } from '../components/admin/EditableText';
+import { EditableImage } from '../components/admin/EditableImage';
+
 
 interface FeaturedSolveScreenProps {
   onNavigate: (screen: ScreenId) => void;
@@ -189,10 +192,12 @@ export const FeaturedSolveScreen: React.FC<FeaturedSolveScreenProps> = ({
 
               {/* Hero Book Cover Representation */}
               <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#f0edea] border border-[#dec0b4] flex items-center justify-center p-4">
-                <img
-                  className="w-full h-full object-cover shadow-md transition-all duration-300"
+                <EditableImage
+                  id="solve_hero_img"
+                  defaultSrc={GALLERY_IMAGES[activePhotoIdx].src}
                   alt={GALLERY_IMAGES[activePhotoIdx].alt}
-                  src={GALLERY_IMAGES[activePhotoIdx].src}
+                  className="w-full h-full"
+                  imgClassName="w-full h-full object-cover shadow-md transition-all duration-300"
                 />
 
                 {/* Letterpress Physical Stamp Badge Overlaid */}
@@ -342,12 +347,18 @@ export const FeaturedSolveScreen: React.FC<FeaturedSolveScreenProps> = ({
               </div>
 
               <div>
-                <h1 className="font-headline-lg text-headline-lg text-[#1c1c1a] font-semibold leading-tight tracking-tight">
-                  The Trans-Continental Caesar Cipher
-                </h1>
-                <p className="font-headline-sm text-headline-sm text-[#9e3d00] font-normal italic mt-1">
-                  82 Enigmas for the Rails • Vol. I
-                </p>
+                <EditableText
+                  id="solve_screen_title"
+                  as="h1"
+                  defaultText="The Trans-Continental Caesar Cipher"
+                  className="font-headline-lg text-headline-lg text-[#1c1c1a] font-semibold leading-tight tracking-tight block"
+                />
+                <EditableText
+                  id="solve_screen_subtitle"
+                  as="p"
+                  defaultText="82 Enigmas for the Rails • Vol. I"
+                  className="font-headline-sm text-headline-sm text-[#9e3d00] font-normal italic mt-1 block"
+                />
               </div>
 
               {/* Price & Solitude Guarantee Metrics */}
@@ -498,12 +509,18 @@ export const FeaturedSolveScreen: React.FC<FeaturedSolveScreenProps> = ({
                 <span className="material-symbols-outlined text-[18px]">key</span>
                 <span>Interactive Dispatch • Enigma Plate #01</span>
               </div>
-              <h2 className="font-headline-lg text-headline-lg text-[#1c1c1a] font-semibold tracking-tight">
-                Test Your Transit Solitude
-              </h2>
-              <p className="font-body-lg text-body-lg text-[#574239] max-w-2xl mt-1">
-                Experience the tactile rhythm of the physical cipher compendium directly in your browser. Rotate the brass shift key, inspect the substitution rings, and decrypt the station dispatch.
-              </p>
+              <EditableText
+                id="solve_interactive_title"
+                as="h2"
+                defaultText="Test Your Transit Solitude"
+                className="font-headline-lg text-headline-lg text-[#1c1c1a] font-semibold tracking-tight block"
+              />
+              <EditableText
+                id="solve_interactive_desc"
+                as="p"
+                defaultText="Experience the tactile rhythm of the physical cipher compendium directly in your browser. Rotate the brass shift key, inspect the substitution rings, and decrypt the station dispatch."
+                className="font-body-lg text-body-lg text-[#574239] max-w-2xl mt-1 block"
+              />
             </div>
 
             <div className="bg-[#ffffff] p-3 border border-[#1c1c1a] shadow-sm flex items-center gap-4">

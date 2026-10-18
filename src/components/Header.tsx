@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScreenId } from '../types';
+import { EditableText } from './admin/EditableText';
 
 interface HeaderProps {
   currentScreen: ScreenId;
@@ -30,7 +31,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
             <span className="inline-block w-2 h-2 rounded-full bg-[#9e3d00] animate-pulse shrink-0"></span>
             <span className="uppercase tracking-wider truncate">
-              PLATFORM 04 • DISPATCHING NO. 14 WORLDWIDE • “OBJECTS FOR THE QUIET IN-BETWEEN” • EDITIONS PRINTED ON FSC RECYCLED NEWSPRINT
+              <EditableText
+                id="header_top_ticker"
+                defaultText="PLATFORM 04  • “OBJECTS FOR THE QUIET IN-BETWEEN” • EDITIONS PRINTED ON FSC RECYCLED NEWSPRINT"
+              />
             </span>
           </div>
           <div
@@ -57,12 +61,16 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onNavigate('station-kiosk')}
             className="flex flex-col text-left focus:outline-none"
           >
-            <span className="font-headline-sm text-headline-sm uppercase tracking-tight text-[#1c1c1a] font-bold leading-none">
-              ORMA
-            </span>
-            <span className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-[#574239]">
-              EDITIONS • MILANO
-            </span>
+            <EditableText
+              id="header_brand_name"
+              defaultText="ORMA"
+              className="font-headline-sm text-headline-sm uppercase tracking-tight text-[#1c1c1a] font-bold leading-none"
+            />
+            <EditableText
+              id="header_brand_sub"
+              defaultText="EDITIONS • MILANO"
+              className="font-label-mono-sm text-label-mono-sm uppercase tracking-widest text-[#574239]"
+            />
           </button>
         </div>
 
