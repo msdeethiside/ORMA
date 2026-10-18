@@ -2,7 +2,9 @@ export type ScreenId =
   | 'station-kiosk'
   | 'editions-and-archive'
   | 'featured-solve-caesar-cipher'
-  | 'dispatch-and-submissions';
+  | 'dispatch-and-submissions'
+  | 'makers-note';
+
 
 export interface CartItem {
   id: string;

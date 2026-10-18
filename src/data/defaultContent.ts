@@ -94,8 +94,49 @@ export const DEFAULT_SITE_CONTENT: Record<string, string> = {
   submissions_covenant_lead:
     'We founded ORMA because modern publishing often isolates creators behind opaque contracts and meager royalties. We operate as an artisan guild where your effort is honored with equal partnership, uncompromising paper selection, and immediate transparency.',
 
+  // Maker's Note Dedicated Page
+  makers_page_folio_tag: 'MEMOIR & MANIFESTO • FOLIO NO. 05 • MILANO & VERONA PRESSWORK',
+  makers_page_station_desk: 'STATION DESK: VERONA RIVERA',
+  makers_page_dispatch_ref: 'DISPATCH REF: #ORMA-LTR-24',
+  makers_page_essay_tag: '[ 01. ESSAY & MAKER’S INTENTION ]',
+  makers_page_title: 'The Disappearance of the Train Bookstall',
+  makers_page_subtitle:
+    'A personal letter on why we craft slow, physical transit objects for the quiet in-between moments of travel and contemplation.',
+  makers_page_watermark_badge: 'VERONA ATELIER • FOLIO CORRESPONDENCE',
+  makers_page_p1:
+    '“ORMA was born in the particular stillness of a long journey. I grew up travelling. Trains mostly, sometimes buses — long hours with my family, watching the landscape change outside the window. My mother always had something to read. So did we.',
+  makers_page_p2:
+    'Somewhere along the way, the bookstalls at stations started disappearing. The vendors who boarded trains with stacks of books stopped coming. And everyone started looking at their phones instead.',
+  makers_page_p3:
+    'ORMA Editions are my answer to that disappearance. For the train, the café, the wait, the quiet in-between moments that don’t need a screen.”',
+  makers_page_author_name: '— Ms. Dee',
+  makers_page_author_title: 'Founder & Typographer, ORMA Editions',
+  makers_page_portrait_img:
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuCRSWQ0kQ8QIl4TEaY9iTnyNdloaPqNdl7P2mG3LmjdAU5RgDchdBkulq_1eNvQApUXaT55cUQAgs9WABXei2XQeUBOwbnJItYMlq1KBZ5UG8xGffTTDpSlZJajNpaSlNs_5VWpkFLU8bd9Ko_pKzt9kEPt3oJaTzcZuBnnG3NG-azqDu-srmOfD9H8B53YD6pT8ddYfIR7ucv9qt8XZvA47q04P3x-NktaMATad1eld715n0UhRYlZ2A',
+  makers_page_portrait_caption: 'PLATE 01: MS. DEE',
+  makers_page_portrait_time: 'VERONA, 07:15 AM',
+  makers_page_pillars_tag: '[ 02. ANATOMY OF A TRANSIT OBJECT ]',
+  makers_page_pillars_title: 'The Three Foundational Pillars',
+  makers_page_pillars_desc:
+    'Every compendium and zine created in our Verona workshop is physically engineered around three uncompromising physical commitments.',
+  makers_page_gallery_tag: '[ 03. STUDIO GALLERY & PRESS DIARY ]',
+  makers_page_gallery_title: 'Inside the Verona Atelier & Archive',
+  makers_page_gallery_desc:
+    'Every compendium is typeset by hand, proofed on cold zinc slabs, and packed in heavy kraft envelopes stamped with the day’s rail departures.',
+  makers_frame1_img:
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAak6a9d7zgB7ujopUXtMpyPlmIw35UhQ75JJIuLmS0CXQLN5N_txzbtR86VR0pqi_oRdXj6Ah0cDDSkPP738barwrSbXjMYnV4m7hWd43mlAx9VgA2LqZp8zi4bQsAL0Hi3cvE8MpYdXrmNEh-WhVggGjQba50KdQCbWy7QHJoFgdk3pO99hgDK7DUp2XZx469xP40qefsF3Fzwgv9SCNIvAj2UVjqsesC0kRzGmFA-34-iqqqcuVi1Q',
+  makers_frame2_img:
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAZfzDyHyo2kslzDA6bwzu9t_eroVx2-GfdKD628JagkoVPNELrdGBDfsqwgseFKGO5fBdiYlLYoLLarJQKwh7lzjaY6GRkfFt0eyP5kDLhpC2EJSleZlOwlLFCIIaF3VYvWXPD1JzCff7jVs2Sg3hBj_k1EaRm2rnvtuXoES3rStuy9ay-gBmkFB1mZiqI2TYtovB0qwfosaN4-0_AJtX7RNJj-jgv3ZOXrOn9B0baILMsAxO7BsxQYg',
+  makers_frame3_img:
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuBBXsi66dwlnvXscS4WNKxJa7QwzXdlrK-I0a37zhSx6D5S4d9sx8ysYA-AH-OIAG-WUy6NsPaY7BOnShLfTwArE1UcmUBfEEqLDHc2nEEgYVLkmIQDLrF7I-flzpjYC53fLyHKh6gR6f-6adMJ9E3EUYL4NVkdVyaly2ddcEsjiIjZpKPzgKaxcOKwn16jlPbtVz4cU0gUDUdZRtEKvX-otj32HyxkY7CD62wisv2vxwWRdFHhxeNf_Q',
+  makers_page_contact_tag: '[ 04. POSTAL INQUIRIES & DISPATCH DESK ]',
+  makers_page_contact_title: 'Studio Postal Desk & Wire Inquiries',
+  makers_page_contact_desc:
+    'Whether you are an independent station kiosk owner, a railway traveler with a solve story, or seeking bespoke editions for a continental passage.',
+
   // Global Footer
   footer_editorial_quote:
     'Born in the stillness of long train journeys. Physical puzzle compendiums and printed zines made for transit, cafés, and unhurried hours.',
   footer_colophon: 'ORMA EDITIONS © 2025 • EDITED BY MS. DEE • OFFLINE BY INTENTION',
 };
+

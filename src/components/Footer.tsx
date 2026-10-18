@@ -96,7 +96,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h4 className="font-label-mono-md text-label-mono-md uppercase tracking-wider text-[#1c1c1a] font-bold mb-4">
               Studio & Stockists
             </h4>
-            <ul className="space-y-2 font-body-sm text-body-sm text--[#574239]">
+            <ul className="space-y-2 font-body-sm text-body-sm text-[#574239]">
+              <li>
+                <button
+                  onClick={() => onNavigate('makers-note')}
+                  className="hover:text-[#9e3d00] transition-colors text-left font-medium"
+                >
+                  Maker’s Note & Ethos
+                </button>
+              </li>
               <li>
                 <button
                   onClick={() => onNavigate('editions-and-archive')}
@@ -105,6 +113,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   Station Bookstalls
                 </button>
               </li>
+
               <li>
                 <button
                   onClick={() => onNavigate('editions-and-archive')}

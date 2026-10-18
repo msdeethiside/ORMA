@@ -121,12 +121,17 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
-            onClick={onScrollToMakersNote}
-            className="font-label-mono-md text-label-mono-md uppercase tracking-wider text-[#574239] hover:text-[#1c1c1a] transition-colors py-1 px-2 cursor-pointer"
+            onClick={() => onNavigate('makers-note')}
+            className={`font-label-mono-md text-label-mono-md uppercase tracking-wider px-3 py-1.5 transition-colors cursor-pointer ${
+              currentScreen === 'makers-note'
+                ? 'bg-[#c15316] text-[#fffbff] font-bold shadow-sm'
+                : 'text-[#574239] hover:text-[#1c1c1a]'
+            }`}
           >
             Maker’s Note
           </button>
         </nav>
+
 
         {/* Right Action Icons & Carriage Bag */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -239,15 +244,20 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => {
-              onScrollToMakersNote();
+              onNavigate('makers-note');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left font-label-mono-md text-label-mono-md uppercase tracking-wider px-3 py-2.5 text-[#574239] hover:bg-[#f0edea]"
+            className={`w-full text-left font-label-mono-md text-label-mono-md uppercase tracking-wider px-3 py-2.5 ${
+              currentScreen === 'makers-note'
+                ? 'bg-[#c15316] text-[#fffbff] font-bold'
+                : 'text-[#574239] hover:bg-[#f0edea]'
+            }`}
           >
             Maker’s Note
           </button>
         </div>
       )}
     </header>
+
   );
 };

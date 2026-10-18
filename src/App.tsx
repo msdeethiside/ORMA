@@ -11,6 +11,7 @@ import { StationKioskScreen } from './screens/StationKioskScreen';
 import { EditionsArchiveScreen } from './screens/EditionsArchiveScreen';
 import { FeaturedSolveScreen } from './screens/FeaturedSolveScreen';
 import { DispatchSubmissionsScreen } from './screens/DispatchSubmissionsScreen';
+import { MakersNoteScreen } from './screens/MakersNoteScreen';
 import { AdminProvider, useAdmin } from './context/AdminContext';
 import { AdminBottomBar } from './components/admin/AdminBottomBar';
 import { AdminAuthModal } from './components/admin/AdminAuthModal';
@@ -141,6 +142,7 @@ function AppLayout() {
       'editions-and-archive': 'The Complete Catalogue & Print Archive • ORMA Editions',
       'featured-solve-caesar-cipher': 'The Trans-Continental Caesar Cipher • Vol. I Solve',
       'dispatch-and-submissions': 'Open Carriage Submissions & Creator Dispatch • ORMA Editions',
+      'makers-note': 'The Disappearance of the Train Bookstall • Maker’s Note • ORMA Editions',
     };
     document.title = titles[currentScreen];
   }, [currentScreen]);
@@ -190,6 +192,10 @@ function AppLayout() {
 
         {currentScreen === 'dispatch-and-submissions' && (
           <DispatchSubmissionsScreen />
+        )}
+
+        {currentScreen === 'makers-note' && (
+          <MakersNoteScreen onNavigate={handleNavigate} />
         )}
       </main>
 
