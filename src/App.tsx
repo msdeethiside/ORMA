@@ -19,8 +19,49 @@ import { ImageSwapModal } from './components/admin/ImageSwapModal';
 
 function AppLayout() {
   const { isAdmin } = useAdmin();
-  const [currentScreen, setCurrentScreen] = useState<ScreenId>('station-kiosk');
+  // Helper to extract the active screen from either hash or subpath
+  const getScreenFromLocation = (): ScreenId => {
+    if (typeof window === 'undefined') return 'station-kiosk';
+    const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase().trim();
+    if (hash === 'editions-and-archive' || hash.startsWith('editions')) return 'editions-and-archive';
+    if (hash === 'featured-solve-caesar-cipher' || hash.startsWith('featured')) return 'featured-solve-caesar-cipher';
+    if (hash === 'dispatch-and-submissions' || hash.startsWith('dispatch') || hash.startsWith('submissions')) return 'dispatch-and-submissions';
+    if (hash === 'makers-note' || hash.startsWith('makers')) return 'makers-note';
 
+    const path = window.location.pathname.toLowerCase().replace(/^\/orma\/?/i, '').replace(/^\//, '').trim();
+    if (path === 'editions-and-archive' || path.startsWith('editions')) return 'editions-and-archive';
+    if (path === 'featured-solve-caesar-cipher' || path.startsWith('featured')) return 'featured-solve-caesar-cipher';
+    if (path === 'dispatch-and-submissions' || path.startsWith('dispatch') || path.startsWith('submissions')) return 'dispatch-and-submissions';
+    if (path === 'makers-note' || path.startsWith('makers')) return 'makers-note';
+
+    return 'station-kiosk';
+  };
+
+  const [currentScreen, setCurrentScreen] = useState<ScreenId>(getScreenFromLocation);
+
+  // Sync route on browser back/forward or hash changes
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const screen = getScreenFromLocation();
+      setCurrentScreen(screen);
+    };
+
+    window.addEventListener('hashchange', handleUrlChange);
+    window.addEventListener('popstate', handleUrlChange);
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange);
+      window.removeEventListener('popstate', handleUrlChange);
+    };
+  }, []);
+
+  const handleNavigate = (screen: ScreenId) => {
+    setCurrentScreen(screen);
+    const targetHash = screen === 'station-kiosk' ? '#/' : `#/${screen}`;
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Initial cart with 2 items to match the starting header badge "Carriage Bag: 2"
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -64,11 +105,6 @@ function AppLayout() {
     setTimeout(() => {
       setToastMessage(null);
     }, 2500);
-  };
-
-  const handleNavigate = (screen: ScreenId) => {
-    setCurrentScreen(screen);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleScrollToMakersNote = () => {

@@ -80,13 +80,10 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // 2. Route Check for /admin-1994 and Admin Session
   useEffect(() => {
     const checkRoute = () => {
-      const path = window.location.pathname;
-      const hash = window.location.hash;
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
       const isAdminRoute =
-        path === '/admin-1994' ||
-        path.startsWith('/admin-1994') ||
-        hash === '#/admin-1994' ||
-        hash === '#admin-1994' ||
+        path.includes('admin-1994') ||
         hash.includes('admin-1994');
 
       const hasSession = localStorage.getItem(STORAGE_AUTH_KEY) === 'true';
@@ -128,9 +125,10 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setPendingChanges({});
     setIsAuthModalOpen(false);
 
-    // Redirect back to /
+    // Redirect cleanly without breaking subpath repository deployments
     if (window.location.pathname.includes('admin-1994') || window.location.hash.includes('admin-1994')) {
-      window.history.pushState(null, '', '/');
+      const cleanPath = window.location.pathname.replace(/\/admin-1994.*$/i, '') || '/';
+      window.history.pushState(null, '', cleanPath + '#/');
     }
   };
 

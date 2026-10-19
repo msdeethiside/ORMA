@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ORMA Editions</title>
+    <script>
+      // Single Page Application redirect script for GitHub Pages subpath repositories
+      // When a user lands directly on a route such as /ORMA/admin-1994, GitHub Pages serves this 404.html.
+      // This script converts the pathname to a hash route (/ORMA/#/admin-1994) and redirects immediately.
+      (function() {
+        var pathSegmentsToKeep = 1; // Preserves repository subpath: /ORMA/
+        var l = window.location;
+        var pathSegments = l.pathname.split('/').filter(Boolean);
+        var repoName = pathSegments[0] || 'ORMA';
+        var remainingPath = pathSegments.slice(pathSegmentsToKeep).join('/');
+        
+        var targetUrl = '/' + repoName + '/#/' + (remainingPath ? remainingPath : '') +
+          (l.search ? '?' + l.search.slice(1) : '') +
+          l.hash;
+        
+        window.location.replace(targetUrl);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to ORMA Editions...</p>
+  </body>
+</html>

@@ -5,7 +5,22 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    base: '/ORMA/',
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'dev-root-redirect',
+        configureServer(server) {
+          server.middlewares.use((req, _res, next) => {
+            if (req.url === '/' || req.url === '') {
+              req.url = '/ORMA/';
+            }
+            next();
+          });
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
