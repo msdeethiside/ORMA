@@ -11,6 +11,8 @@ export const AdminBottomBar: React.FC = () => {
     resetToDefaults,
     logout,
     savedToast,
+    isSaving,
+    saveError,
   } = useAdmin();
 
   if (!isAdmin) return null;
@@ -19,7 +21,7 @@ export const AdminBottomBar: React.FC = () => {
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 animate-slideUp">
-      <div className="bg-[#1c1c1a] text-[#ffffff] px-4 py-3 sm:px-6 sm:py-3.5 border-2 border-sky-400 shadow-[0_10px_30px_rgba(0,0,0,0.4)] flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#1c1c1a] text-[#ffffff] px-4 py-3 sm:px-6 sm:py-3.5 border-2 border-sky-400 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-wrap items-center justify-between gap-3">
         {/* Left: Status badge */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 bg-[#31302e] px-2.5 py-1 border border-white/20">
@@ -31,14 +33,14 @@ export const AdminBottomBar: React.FC = () => {
 
           <div className="hidden sm:flex items-center gap-2 font-label-mono-sm text-xs">
             {hasUnsavedChanges ? (
-              <span className="text-amber-300 font-bold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                {pendingCount} unsaved change{pendingCount > 1 ? 's' : ''}
+              <span className="text-amber-300 font-bold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                {pendingCount} unsaved change{pendingCount > 1 ? 's' : ''} (staged)
               </span>
             ) : (
               <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <span className="material-symbols-outlined text-[14px]">check</span>
-                All changes saved live
+                <span className="material-symbols-outlined text-[14px]">cloud_done</span>
+                Synced with Cloud Firestore
               </span>
             )}
           </div>
@@ -46,7 +48,7 @@ export const AdminBottomBar: React.FC = () => {
 
         {/* Right: Actions */}
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          {hasUnsavedChanges && (
+          {hasUnsavedChanges && !isSaving && (
             <button
               type="button"
               onClick={discardChanges}
@@ -60,8 +62,9 @@ export const AdminBottomBar: React.FC = () => {
           <button
             type="button"
             onClick={resetToDefaults}
+            disabled={isSaving}
             className="hidden md:inline-block px-2.5 py-1.5 bg-transparent hover:bg-white/10 text-stone-400 hover:text-white font-label-mono-sm text-[11px] uppercase tracking-wider transition-colors cursor-pointer"
-            title="Reset all content to original defaults"
+            title="Reset all content to original defaults in Firestore"
           >
             Reset Defaults
           </button>
@@ -70,15 +73,24 @@ export const AdminBottomBar: React.FC = () => {
           <button
             type="button"
             onClick={saveChanges}
-            disabled={!hasUnsavedChanges}
+            disabled={!hasUnsavedChanges || isSaving}
             className={`px-4 py-1.5 sm:py-2 font-label-mono-sm text-xs uppercase font-bold tracking-wider flex items-center gap-1.5 shadow transition-all cursor-pointer ${
-              hasUnsavedChanges
+              hasUnsavedChanges && !isSaving
                 ? 'bg-sky-500 hover:bg-sky-400 text-white shadow-[0_0_15px_rgba(56,189,248,0.5)] active:scale-95'
-                : 'bg-stone-700 text-stone-400 cursor-not-allowed'
+                : 'bg-stone-700 text-stone-400 cursor-not-allowed opacity-80'
             }`}
           >
-            <span className="material-symbols-outlined text-[16px]">save</span>
-            <span>Save Changes</span>
+            {isSaving ? (
+              <>
+                <span className="material-symbols-outlined text-[16px] animate-spin">sync</span>
+                <span>Saving to Cloud...</span>
+              </>
+            ) : (
+              <>
+                <span className="material-symbols-outlined text-[16px]">cloud_upload</span>
+                <span>Save Changes</span>
+              </>
+            )}
           </button>
 
           {/* Exit Admin Mode button */}
@@ -96,7 +108,13 @@ export const AdminBottomBar: React.FC = () => {
 
       {savedToast && (
         <div className="mt-2 text-center bg-emerald-600 text-white py-1.5 px-4 font-label-mono-sm text-xs uppercase tracking-wider font-bold shadow-lg border border-emerald-400 animate-fadeIn">
-          ✓ All batch changes saved live to persistent storage!
+          ✓ All batch changes saved permanently to Cloud Firestore!
+        </div>
+      )}
+
+      {saveError && (
+        <div className="mt-2 text-center bg-red-700 text-white py-1.5 px-4 font-label-mono-sm text-xs uppercase tracking-wider font-bold shadow-lg border border-red-500 animate-fadeIn">
+          ⚠ {saveError}
         </div>
       )}
     </div>

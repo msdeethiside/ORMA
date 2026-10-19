@@ -1,0 +1,31 @@
+{
+  "entities": {
+    "SiteContent": {
+      "title": "SiteContent",
+      "description": "Global editable site content key-value mapping for ORMA Editions",
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "object",
+          "description": "Dictionary of editable content keys and their corresponding text or image URL values"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of the last save"
+        },
+        "updatedBy": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Identifier of editor session or admin"
+        }
+      },
+      "required": ["content", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/site_content/{contentId}": {
+      "schema": "SiteContent",
+      "description": "Live published site content accessible to public visitors and editable via admin mode"
+    }
+  }
+}

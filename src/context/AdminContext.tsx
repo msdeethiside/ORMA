@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { db, handleFirestoreError, OperationType } from '../firebase/firebase';
 import { DEFAULT_SITE_CONTENT } from '../data/defaultContent';
 
-const STORAGE_CONTENT_KEY = 'orma_site_content';
 const STORAGE_AUTH_KEY = 'orma_admin_session';
 const ADMIN_PIN = '1994';
+const SITE_CONTENT_DOC_PATH = 'site_content/live';
 
 interface AdminContextType {
   isAdmin: boolean;
@@ -11,12 +13,14 @@ interface AdminContextType {
   content: Record<string, string>;
   pendingChanges: Record<string, string>;
   hasUnsavedChanges: boolean;
+  isSaving: boolean;
+  isLoadingFromDb: boolean;
   login: (pin: string) => boolean;
   logout: () => void;
   updateContent: (key: string, value: string) => void;
-  saveChanges: () => void;
+  saveChanges: () => Promise<void>;
   discardChanges: () => void;
-  resetToDefaults: () => void;
+  resetToDefaults: () => Promise<void>;
   openAuthModal: () => void;
   closeAuthModal: () => void;
   activeImageModal: { key: string; currentSrc: string } | null;
@@ -24,6 +28,7 @@ interface AdminContextType {
   closeImageModal: () => void;
   applyImageSwap: (key: string, newSrc: string) => void;
   savedToast: boolean;
+  saveError: string | null;
 }
 
 const AdminContext = createContext<AdminContextType | null>(null);
@@ -31,23 +36,48 @@ const AdminContext = createContext<AdminContextType | null>(null);
 export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
-  const [persistedContent, setPersistedContent] = useState<Record<string, string>>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_CONTENT_KEY);
-      if (stored) {
-        return { ...DEFAULT_SITE_CONTENT, ...JSON.parse(stored) };
-      }
-    } catch (e) {
-      console.error('Error reading persisted content:', e);
-    }
-    return DEFAULT_SITE_CONTENT;
-  });
-
+  const [persistedContent, setPersistedContent] = useState<Record<string, string>>(DEFAULT_SITE_CONTENT);
   const [pendingChanges, setPendingChanges] = useState<Record<string, string>>({});
   const [activeImageModal, setActiveImageModal] = useState<{ key: string; currentSrc: string } | null>(null);
   const [savedToast, setSavedToast] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isLoadingFromDb, setIsLoadingFromDb] = useState(true);
 
-  // Check URL route /admin-1994 on mount and popstate
+  // 1. Cloud Firestore Realtime Sync:
+  // On page load, fetch content key-value mapping from Firestore so all public visitors immediately see latest live edits.
+  useEffect(() => {
+    const liveDocRef = doc(db, 'site_content', 'live');
+
+    const unsubscribe = onSnapshot(
+      liveDocRef,
+      (snapshot) => {
+        setIsLoadingFromDb(false);
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          if (data && typeof data.content === 'object' && data.content !== null) {
+            setPersistedContent({
+              ...DEFAULT_SITE_CONTENT,
+              ...(data.content as Record<string, string>),
+            });
+          }
+        }
+      },
+      (error) => {
+        setIsLoadingFromDb(false);
+        console.warn('Realtime listener fallback to default content:', error.message);
+        try {
+          handleFirestoreError(error, OperationType.GET, SITE_CONTENT_DOC_PATH);
+        } catch (e) {
+          console.error('Firestore Error caught:', e);
+        }
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  // 2. Route Check for /admin-1994 and Admin Session
   useEffect(() => {
     const checkRoute = () => {
       const path = window.location.pathname;
@@ -104,7 +134,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-
   const updateContent = (key: string, value: string) => {
     setPendingChanges((prev) => ({
       ...prev,
@@ -112,19 +141,44 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }));
   };
 
-  const saveChanges = () => {
+  // 3. Batch-save all modified keys directly to cloud Firestore
+  const saveChanges = async () => {
+    if (Object.keys(pendingChanges).length === 0) return;
+
+    setIsSaving(true);
+    setSaveError(null);
+
     const updated = {
       ...persistedContent,
       ...pendingChanges,
     };
+
     try {
-      localStorage.setItem(STORAGE_CONTENT_KEY, JSON.stringify(updated));
+      const liveDocRef = doc(db, 'site_content', 'live');
+      await setDoc(
+        liveDocRef,
+        {
+          content: updated,
+          updatedAt: new Date().toISOString(),
+          updatedBy: 'admin-1994',
+        },
+        { merge: true }
+      );
+
       setPersistedContent(updated);
       setPendingChanges({});
       setSavedToast(true);
-      setTimeout(() => setSavedToast(false), 3000);
-    } catch (e) {
-      console.error('Failed to save to localStorage:', e);
+      setTimeout(() => setSavedToast(false), 3500);
+    } catch (error) {
+      console.error('Failed to batch-save content to Firestore:', error);
+      setSaveError('Failed to save to cloud database. Please retry.');
+      try {
+        handleFirestoreError(error, OperationType.WRITE, SITE_CONTENT_DOC_PATH);
+      } catch (e) {
+        // Logged structured error
+      }
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -132,15 +186,35 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setPendingChanges({});
   };
 
-  const resetToDefaults = () => {
+  const resetToDefaults = async () => {
+    setIsSaving(true);
+    setSaveError(null);
     try {
-      localStorage.removeItem(STORAGE_CONTENT_KEY);
+      const liveDocRef = doc(db, 'site_content', 'live');
+      await setDoc(
+        liveDocRef,
+        {
+          content: DEFAULT_SITE_CONTENT,
+          updatedAt: new Date().toISOString(),
+          updatedBy: 'admin-reset',
+        },
+        { merge: true }
+      );
+
       setPersistedContent(DEFAULT_SITE_CONTENT);
       setPendingChanges({});
       setSavedToast(true);
-      setTimeout(() => setSavedToast(false), 3000);
-    } catch (e) {
-      console.error('Failed to reset to defaults:', e);
+      setTimeout(() => setSavedToast(false), 3500);
+    } catch (error) {
+      console.error('Failed to reset content in Firestore:', error);
+      setSaveError('Failed to reset in cloud database.');
+      try {
+        handleFirestoreError(error, OperationType.WRITE, SITE_CONTENT_DOC_PATH);
+      } catch (e) {
+        // Logged structured error
+      }
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -176,6 +250,8 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         content,
         pendingChanges,
         hasUnsavedChanges,
+        isSaving,
+        isLoadingFromDb,
         login,
         logout,
         updateContent,
@@ -189,6 +265,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         closeImageModal,
         applyImageSwap,
         savedToast,
+        saveError,
       }}
     >
       {children}

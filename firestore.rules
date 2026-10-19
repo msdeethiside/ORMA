@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Primitive validation helpers
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isValidSiteContent(data) {
+      return data.keys().hasAll(['content', 'updatedAt'])
+        && data.keys().hasOnly(['content', 'updatedAt', 'updatedBy'])
+        && data.content is map
+        && data.updatedAt is string && data.updatedAt.size() <= 64
+        && (!('updatedBy' in data) || (data.updatedBy is string && data.updatedBy.size() <= 100));
+    }
+
+    // Site content collection for live public reading and admin batch updates
+    match /site_content/{contentId} {
+      // Allow single document get for live content; forbid collection-wide listing
+      allow get: if isValidId(contentId) && contentId == 'live';
+      allow list: if false;
+
+      // Allow creating or updating the 'live' content document with strict validation
+      allow create, update: if isValidId(contentId) 
+        && contentId == 'live' 
+        && isValidSiteContent(incoming());
+
+      // Deletions never allowed
+      allow delete: if false;
+    }
+  }
+}

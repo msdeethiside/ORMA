@@ -40,10 +40,45 @@ export const ImageSwapModal: React.FC = () => {
 
     const reader = new FileReader();
     reader.onload = () => {
-      const result = reader.result as string;
-      setPreviewSrc(result);
-      setImageUrl(result);
-      setFileError(null);
+      const rawDataUrl = reader.result as string;
+      // Optimize image through canvas to keep payload small and fast for Cloud Firestore
+      const img = new Image();
+      img.onload = () => {
+        const MAX_DIM = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.84);
+          setPreviewSrc(optimizedDataUrl);
+          setImageUrl(optimizedDataUrl);
+        } else {
+          setPreviewSrc(rawDataUrl);
+          setImageUrl(rawDataUrl);
+        }
+        setFileError(null);
+      };
+      img.onerror = () => {
+        setPreviewSrc(rawDataUrl);
+        setImageUrl(rawDataUrl);
+        setFileError(null);
+      };
+      img.src = rawDataUrl;
     };
     reader.onerror = () => {
       setFileError('Failed to read file from local drive.');
