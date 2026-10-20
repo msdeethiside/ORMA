@@ -3,24 +3,11 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 
-export default defineConfig(() => {
+export default defineConfig(({command}) => {
   return {
-    base: '/ORMA/',
-    plugins: [
-      react(),
-      tailwindcss(),
-      {
-        name: 'dev-root-redirect',
-        configureServer(server) {
-          server.middlewares.use((req, _res, next) => {
-            if (req.url === '/' || req.url === '') {
-              req.url = '/ORMA/';
-            }
-            next();
-          });
-        },
-      },
-    ],
+    // In production build for GitHub Pages, use '/ORMA/'. In dev mode, use '/' for container preview compatibility.
+    base: process.env.VITE_BASE_PATH || (command === 'build' ? '/ORMA/' : '/'),
+    plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
