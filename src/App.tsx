@@ -16,6 +16,7 @@ import { AdminProvider, useAdmin } from './context/AdminContext';
 import { AdminBottomBar } from './components/admin/AdminBottomBar';
 import { AdminAuthModal } from './components/admin/AdminAuthModal';
 import { ImageSwapModal } from './components/admin/ImageSwapModal';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function AppLayout() {
   const { isAdmin } = useAdmin();
@@ -306,9 +307,11 @@ function AppLayout() {
 
 export default function App() {
   return (
-    <AdminProvider>
-      <AppLayout />
-    </AdminProvider>
+    <ErrorBoundary>
+      <AdminProvider>
+        <AppLayout />
+      </AdminProvider>
+    </ErrorBoundary>
   );
 }
 
